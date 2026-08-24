@@ -1,29 +1,32 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Cormorant_Garamond, Manrope } from 'next/font/google';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const manrope = Manrope({
+  variable: '--font-manrope',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const editorial = Cormorant_Garamond({
+  variable: '--font-editorial',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
-  title: 'Name & Name — A Wedding Gift Made With Love',
+  metadataBase: new URL('https://wedding-memory-keepsake.uuchkaa0610.chatgpt.site'),
+  title: 'Jiji & Roselyn — A Wedding Gift Made With Love',
   description:
     'A timeless white-and-gold wedding keepsake for a lifetime of beautiful memories.',
   openGraph: {
-    title: 'Name & Name — A Celebration of Forever',
+    title: 'Jiji & Roselyn — A Celebration of Forever',
     description: 'A beautiful home for a lifetime of memories.',
     images: [{ url: '/og.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Name & Name — A Celebration of Forever',
+    title: 'Jiji & Roselyn — A Celebration of Forever',
     description: 'A beautiful home for a lifetime of memories.',
     images: ['/og.png'],
   },
@@ -37,7 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${manrope.variable} ${editorial.variable} antialiased`}
       >
         {children}
       </body>

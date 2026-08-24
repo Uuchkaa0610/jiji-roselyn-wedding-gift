@@ -8,8 +8,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
  * Put your own JPG/PNG files in public/images, then use "/images/your-file.jpg".
  */
 const wedding = {
-  partnerOne: "Name",
-  partnerTwo: "Name",
+  partnerOne: "Jiji",
+  partnerTwo: "Roselyn",
   date: "September 14, 2026",
   location: "A beautiful beginning",
   giftFrom: "Your Friends",
@@ -132,6 +132,7 @@ function optimizeImage(file) {
 
 export default function WeddingGift() {
   const [giftOpened, setGiftOpened] = useState(false);
+  const [opening, setOpening] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
   const [uploadedMemories, setUploadedMemories] = useState([]);
@@ -158,6 +159,24 @@ export default function WeddingGift() {
   }, []);
 
   useEffect(() => {
+    if (!giftOpened) return undefined;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.14 },
+    );
+    const revealItems = document.querySelectorAll("[data-reveal]");
+    revealItems.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [giftOpened]);
+
+  useEffect(() => {
     if (activeIndex === null) return undefined;
     document.body.style.overflow = "hidden";
     window.setTimeout(() => closeButtonRef.current?.focus(), 0);
@@ -179,8 +198,11 @@ export default function WeddingGift() {
   }, [activeIndex, allMemories.length]);
 
   const openGift = () => {
-    setGiftOpened(true);
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "instant" }), 0);
+    setOpening(true);
+    window.setTimeout(() => {
+      setGiftOpened(true);
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }, 900);
   };
 
   const openMemory = (index) => {
@@ -254,12 +276,12 @@ export default function WeddingGift() {
 
   if (!giftOpened) {
     return (
-      <main className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#eee4d3] px-4 py-8 text-[#30291f]">
+      <main className={"gift-wrap-stage relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-[#eee4d3] px-4 py-8 text-[#30291f] " + (opening ? "is-opening" : "")}>
         <div className="absolute inset-0 opacity-45 [background-image:radial-gradient(circle_at_20%_12%,rgba(255,255,255,.95),transparent_24%),radial-gradient(circle_at_82%_88%,rgba(173,132,67,.22),transparent_28%)]" />
-        <div className="absolute inset-y-0 left-1/2 w-16 -translate-x-1/2 bg-[linear-gradient(90deg,#a87a35,#dfc080_48%,#9b6e2c)] opacity-75 sm:w-24" />
-        <div className="absolute inset-x-0 top-1/2 h-16 -translate-y-1/2 bg-[linear-gradient(0deg,#a87a35,#dfc080_48%,#9b6e2c)] opacity-75 sm:h-24" />
+        <div className="gift-ribbon-vertical absolute inset-y-0 left-1/2 w-16 -translate-x-1/2 bg-[linear-gradient(90deg,#8e6328,#efcf8d_48%,#8b5e22)] opacity-85 shadow-[0_0_55px_rgba(205,164,87,.3)] sm:w-24" />
+        <div className="gift-ribbon-horizontal absolute inset-x-0 top-1/2 h-16 -translate-y-1/2 bg-[linear-gradient(0deg,#8e6328,#efcf8d_48%,#8b5e22)] opacity-85 shadow-[0_0_55px_rgba(205,164,87,.3)] sm:h-24" />
 
-        <section className="relative z-10 flex min-h-[82svh] w-full max-w-6xl items-center justify-center border border-[#b69254]/55 bg-[#fffdf8]/95 px-6 py-16 text-center shadow-[0_35px_100px_rgba(77,57,29,.22)] backdrop-blur-sm sm:px-12">
+        <section className="gift-card luxury-paper relative z-10 flex min-h-[82svh] w-full max-w-6xl items-center justify-center border border-[#b69254]/55 bg-[#fffdf8]/95 px-6 py-16 text-center shadow-[0_35px_100px_rgba(77,57,29,.22)] backdrop-blur-sm sm:px-12">
           <div className="pointer-events-none absolute inset-3 border border-[#b69254]/25 sm:inset-5" />
           <span className="absolute left-7 top-7 h-12 w-12 border-l border-t border-[#b69254] sm:left-10 sm:top-10 sm:h-20 sm:w-20" />
           <span className="absolute bottom-7 right-7 h-12 w-12 border-b border-r border-[#b69254] sm:bottom-10 sm:right-10 sm:h-20 sm:w-20" />
@@ -270,7 +292,7 @@ export default function WeddingGift() {
             </p>
             <p className="mt-8 font-[Georgia] text-[clamp(4.5rem,13vw,10rem)] leading-[0.76] tracking-[-0.065em] text-[#332b20]">
               {wedding.partnerOne}
-              <span className="mx-[0.08em] block py-4 text-[0.56em] font-normal italic text-[#b48a48] sm:inline sm:py-0">
+              <span className="gold-foil mx-[0.08em] block py-4 text-[0.56em] font-normal italic sm:inline sm:py-0">
                 &
               </span>
               {wedding.partnerTwo}
@@ -282,7 +304,7 @@ export default function WeddingGift() {
             </div>
             <h1 className="mx-auto mt-9 max-w-2xl font-[Georgia] text-3xl font-normal leading-tight sm:text-5xl">
               A little home for your
-              <em className="font-normal text-[#a87a35]"> forever memories.</em>
+              <em className="gold-foil font-normal"> forever memories.</em>
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-[#766b5b] sm:text-lg">
               Made with all our love to celebrate your first day as a family—and every beautiful day that follows.
@@ -374,6 +396,9 @@ export default function WeddingGift() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,14,11,.78)_0%,rgba(16,14,11,.28)_56%,rgba(16,14,11,.45)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(16,14,11,.82)_0%,transparent_58%,rgba(16,14,11,.28)_100%)]" />
+        <p aria-hidden="true" className="pointer-events-none absolute right-[-0.04em] top-[18%] font-[Georgia] text-[22vw] italic leading-none tracking-[-0.08em] text-white/[0.045]">
+          forever
+        </p>
 
         <div className="relative z-10 mx-auto grid w-full max-w-[1600px] gap-10 px-5 pb-14 pt-36 sm:px-10 sm:pb-20 lg:grid-cols-[1fr_auto] lg:items-end lg:px-16 lg:pb-24">
           <div>
@@ -385,7 +410,7 @@ export default function WeddingGift() {
             </div>
             <h1 className="max-w-6xl font-[Georgia] text-[clamp(4.7rem,12vw,11.5rem)] font-normal leading-[0.75] tracking-[-0.065em] text-white">
               {wedding.partnerOne}
-              <span className="mx-[0.08em] font-normal italic text-[#d2b06b]">&</span>
+              <span className="gold-foil mx-[0.08em] font-normal italic">&</span>
               <br className="sm:hidden" />
               {wedding.partnerTwo}
             </h1>
@@ -411,11 +436,18 @@ export default function WeddingGift() {
             </div>
           </div>
         </div>
+        <div className="hero-seal absolute bottom-10 right-10 z-10 hidden h-36 w-36 rotate-[-6deg] items-center justify-center rounded-full border border-[#e5c989]/60 bg-[#2b241b]/70 text-center text-white backdrop-blur-md xl:flex">
+          <div>
+            <p className="font-[Georgia] text-3xl italic text-[#e2c37e]">{initials}</p>
+            <span className="mx-auto mt-2 block h-px w-10 bg-[#d6b66d]" />
+            <p className="mt-2 text-[9px] font-semibold uppercase tracking-[0.24em]">Forever</p>
+          </div>
+        </div>
       </section>
 
       <section className="relative px-5 py-24 sm:px-10 lg:py-36" id="story">
         <div className="absolute left-0 top-0 h-px w-full bg-gradient-to-r from-transparent via-[#c7a45f]/45 to-transparent" />
-        <div className="mx-auto max-w-[1440px]">
+        <div className="mx-auto max-w-[1440px]" data-reveal>
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#a6813f]">
@@ -423,7 +455,7 @@ export default function WeddingGift() {
               </p>
               <h2 className="mt-7 max-w-3xl font-[Georgia] text-[clamp(3.7rem,7vw,7.2rem)] font-normal leading-[0.88] tracking-[-0.055em] text-[#332d24]">
                 Keep every
-                <em className="block font-normal text-[#a6813f]">beautiful chapter.</em>
+                <em className="gold-foil block font-normal">beautiful chapter.</em>
               </h2>
             </div>
             <div className="lg:pb-2">
@@ -432,6 +464,53 @@ export default function WeddingGift() {
               </p>
               <p className="mt-8 font-[Georgia] text-2xl italic text-[#9d773d]">
                 May it grow right alongside your love.
+              </p>
+            </div>
+          </div>
+
+          <div className="relative mt-24 grid gap-5 lg:min-h-[900px]" data-reveal>
+            <div aria-hidden="true" className="absolute left-[42%] top-[12%] hidden h-[460px] w-[460px] rounded-full border border-[#b78b43]/25 lg:block" />
+            <div aria-hidden="true" className="absolute left-[45%] top-[15%] hidden h-[400px] w-[400px] rounded-full border border-[#b78b43]/15 lg:block" />
+
+            <figure className="relative h-[620px] overflow-hidden shadow-[0_32px_90px_rgba(67,48,22,.18)] lg:absolute lg:left-0 lg:top-0 lg:h-[760px] lg:w-[58%]">
+              <img
+                alt="Newlyweds walking and laughing together"
+                className="h-full w-full object-cover object-center"
+                loading="lazy"
+                src="/images/memory-forever.jpg"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#1b1711]/45 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-8 left-8 text-white sm:bottom-12 sm:left-12">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#e3c887]">The greatest adventure</p>
+                <p className="mt-3 font-[Georgia] text-4xl italic sm:text-5xl">Together, always.</p>
+              </figcaption>
+            </figure>
+
+            <figure className="relative h-[500px] overflow-hidden border-[10px] border-[#fbfaf6] shadow-[0_30px_80px_rgba(67,48,22,.2)] lg:absolute lg:bottom-0 lg:right-0 lg:h-[560px] lg:w-[40%]">
+              <img
+                alt="Wedding rings resting on pale flowers"
+                className="h-full w-full object-cover"
+                loading="lazy"
+                src="/images/memory-rings.jpg"
+              />
+            </figure>
+
+            <div className="luxury-paper relative z-10 mx-auto max-w-md border border-[#b78b43]/40 bg-[#fffdf7]/95 p-9 text-center shadow-[0_28px_80px_rgba(67,48,22,.16)] backdrop-blur sm:p-12 lg:absolute lg:left-[49%] lg:top-[12%] lg:w-[390px] lg:-translate-x-1/2">
+              <p className="gold-foil font-[Georgia] text-7xl italic leading-none">{initials}</p>
+              <div className="mx-auto mt-6 flex max-w-40 items-center gap-3 text-[#ad8241]">
+                <span className="h-px flex-1 bg-current" />
+                <span>✦</span>
+                <span className="h-px flex-1 bg-current" />
+              </div>
+              <p className="mt-7 font-[Georgia] text-3xl italic leading-tight text-[#3d3428]">
+                “Where there is love, there is a lifetime of wonder.”
+              </p>
+            </div>
+
+            <div className="relative z-10 max-w-lg bg-[#29231b] p-9 text-white shadow-[0_28px_80px_rgba(30,24,16,.24)] sm:p-12 lg:absolute lg:bottom-[3%] lg:left-[34%] lg:w-[430px]">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[#d9b76c]">Our wish for you</p>
+              <p className="mt-6 font-[Georgia] text-4xl italic leading-tight">
+                May you always find your way back to this much joy.
               </p>
             </div>
           </div>
@@ -455,14 +534,17 @@ export default function WeddingGift() {
         </div>
       </section>
 
-      <section className="bg-[#f1eadf] px-5 py-24 sm:px-10 lg:py-36" id="memories">
-        <div className="mx-auto max-w-[1540px]">
+      <section className="luxury-paper relative overflow-hidden bg-[#f1eadf] px-5 py-24 sm:px-10 lg:py-36" id="memories">
+        <p aria-hidden="true" className="pointer-events-none absolute -right-10 top-6 font-[Georgia] text-[18vw] italic leading-none tracking-[-0.08em] text-[#9b7438]/[0.055]">
+          memories
+        </p>
+        <div className="relative mx-auto max-w-[1540px]" data-reveal>
           <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#9b7438]">The wedding album</p>
               <h2 className="mt-6 max-w-4xl font-[Georgia] text-[clamp(3.8rem,8vw,8.2rem)] font-normal leading-[0.85] tracking-[-0.06em]">
                 Moments worth
-                <em className="block font-normal text-[#a77e3e]">holding onto.</em>
+                <em className="gold-foil block font-normal">holding onto.</em>
               </h2>
             </div>
             <div className="max-w-lg lg:pb-3">
@@ -491,7 +573,7 @@ export default function WeddingGift() {
             </div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
+          <div className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
             {allMemories.map((memory, index) => (
               <article
                 className={"group relative overflow-hidden bg-[#d9cfbe] " + memory.layout + " " + memory.height}
@@ -546,7 +628,7 @@ export default function WeddingGift() {
         </div>
       </section>
 
-      <section className="relative flex min-h-[82svh] items-center justify-center overflow-hidden px-5 py-24 text-center text-white">
+      <section className="relative flex min-h-[92svh] items-center justify-center overflow-hidden px-5 py-24 text-center text-white">
         <img
           alt=""
           aria-hidden="true"
@@ -555,7 +637,7 @@ export default function WeddingGift() {
           src="/images/memory-vows.jpg"
         />
         <div className="absolute inset-0 bg-[#17130d]/75" />
-        <div className="relative mx-auto max-w-6xl">
+        <div className="relative mx-auto max-w-6xl" data-reveal>
           <div className="mx-auto flex max-w-xs items-center gap-4 text-[#d9b96f]">
             <span className="h-px flex-1 bg-current" />
             <span className="text-xl">✦</span>
@@ -563,7 +645,7 @@ export default function WeddingGift() {
           </div>
           <blockquote className="mt-10 font-[Georgia] text-[clamp(3.5rem,8vw,8.5rem)] font-normal italic leading-[0.92] tracking-[-0.05em]">
             “Grow old with me.
-            <span className="block text-[#d8b86d]">The best is yet to be.”</span>
+            <span className="gold-foil block">The best is yet to be.”</span>
           </blockquote>
           <p className="mt-10 text-xs font-semibold uppercase tracking-[0.32em] text-white/[0.7]">
             For every tomorrow
@@ -573,8 +655,8 @@ export default function WeddingGift() {
 
       <section className="relative bg-[#fbfaf6] px-5 py-24 sm:px-10 lg:py-40" id="letter">
         <div className="pointer-events-none absolute left-1/2 top-0 h-24 w-px bg-gradient-to-b from-[#a77e3e] to-transparent" />
-        <div className="mx-auto max-w-6xl">
-          <div className="border border-[#ad8a4f]/45 bg-[#fffefa] p-7 shadow-[0_30px_90px_rgba(79,58,26,.1)] sm:p-12 lg:p-20">
+        <div className="mx-auto max-w-6xl" data-reveal>
+          <div className="luxury-paper border border-[#ad8a4f]/45 bg-[#fffefa] p-7 shadow-[0_30px_90px_rgba(79,58,26,.1)] sm:p-12 lg:p-20">
             <div className="border border-[#ad8a4f]/25 px-6 py-12 sm:px-12 lg:px-20 lg:py-20">
               <p className="text-center text-xs font-bold uppercase tracking-[0.34em] text-[#9b7438]">
                 A letter for the happy couple
@@ -582,7 +664,7 @@ export default function WeddingGift() {
               <div className="mx-auto mt-9 h-px max-w-36 bg-[#b68d4c]/55" />
               <h2 className="mt-12 font-[Georgia] text-[clamp(3.4rem,7vw,6.8rem)] font-normal leading-[0.92] tracking-[-0.045em]">
                 Dear {wedding.partnerOne}
-                <span className="italic text-[#a77e3e]"> & </span>
+                <span className="gold-foil italic"> & </span>
                 {wedding.partnerTwo},
               </h2>
               <div className="mt-12 space-y-7 text-lg leading-9 text-[#6e6558] sm:text-xl sm:leading-10">
@@ -602,7 +684,7 @@ export default function WeddingGift() {
       <footer className="bg-[#231f19] px-5 py-20 text-center text-white sm:px-10">
         <p className="font-[Georgia] text-[clamp(4rem,10vw,8rem)] leading-none tracking-[-0.06em]">
           {wedding.partnerOne}
-          <span className="mx-[0.08em] italic text-[#c7a45f]">&</span>
+          <span className="gold-foil mx-[0.08em] italic">&</span>
           {wedding.partnerTwo}
         </p>
         <p className="mt-8 text-xs font-semibold uppercase tracking-[0.3em] text-[#d7bd86]">
