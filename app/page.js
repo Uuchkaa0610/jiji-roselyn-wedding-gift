@@ -13,7 +13,7 @@ const wedding = {
   date: "September 14, 2026",
   location: "A beautiful beginning",
   giftFrom: "Your Friends",
-  heroImage: "/images/jiji-roselyn-2.png",
+  heroImage: "/images/jiji-roselyn-2-2x.jpg",
   letter: [
     "May your marriage be filled with the kind of love that feels like home—steady on ordinary days, joyful on the extraordinary ones, and stronger through every season.",
     "This little corner of the world is yours to fill with the moments you never want to forget: the laughter, the happy tears, the quiet glances, and every beautiful chapter still to come.",
@@ -45,17 +45,19 @@ const story = [
 const starterMemories = [
   {
     id: "sunset-together",
-    src: "/images/jiji-roselyn-1.png",
+    src: "/images/jiji-roselyn-1-2x.jpg",
     alt: "Jiji and Roselyn sitting together beneath a glowing sunset",
     caption: "Every sunset, together",
     note: "Side by side",
-    layout: "md:col-span-7",
-    height: "h-[520px] md:h-[760px]",
+    layout: "md:col-span-12",
+    height: "h-[460px] sm:h-[700px] md:h-[900px] lg:h-[1060px]",
     position: "center",
+    fit: "object-cover md:object-contain",
+    featured: true,
   },
   {
     id: "same-moon",
-    src: "/images/jiji-roselyn-2.png",
+    src: "/images/jiji-roselyn-2-2x.jpg",
     alt: "Jiji and Roselyn embracing beside the ocean under a crescent moon",
     caption: "Under the same moon",
     note: "Where the night felt like home",
@@ -65,32 +67,32 @@ const starterMemories = [
   },
   {
     id: "golden-hour",
-    src: "/images/jiji-roselyn-3.png",
+    src: "/images/jiji-roselyn-3-2x.jpg",
     alt: "Jiji and Roselyn sharing a golden-hour portrait beside a tree",
     caption: "A love with its own light",
     note: "Golden hour",
-    layout: "md:col-span-5",
-    height: "h-[500px] md:h-[620px]",
+    layout: "md:col-span-7",
+    height: "h-[500px] md:h-[700px]",
     position: "center",
   },
   {
     id: "close-to-you",
-    src: "/images/jiji-roselyn-4.png",
+    src: "/images/jiji-roselyn-4-2x.jpg",
     alt: "Jiji and Roselyn sharing a quiet close embrace",
     caption: "Close to you",
     note: "In every quiet moment",
     layout: "md:col-span-7",
-    height: "h-[500px] md:h-[620px]",
+    height: "h-[500px] md:h-[680px]",
     position: "center",
   },
   {
     id: "every-adventure",
-    src: "/images/jiji-roselyn-5.png",
+    src: "/images/jiji-roselyn-5-2x.jpg",
     alt: "Jiji and Roselyn reaching for one another beneath a starry sky",
     caption: "Into every adventure",
     note: "Always reaching for one another",
-    layout: "md:col-span-12",
-    height: "h-[580px] md:h-[820px]",
+    layout: "md:col-span-5",
+    height: "h-[500px] md:h-[680px]",
     position: "center",
   },
 ];
@@ -140,12 +142,15 @@ export default function WeddingGift() {
   );
 
   useEffect(() => {
-    try {
-      const savedPhotos = window.localStorage.getItem(uploadStorageKey);
-      if (savedPhotos) setUploadedMemories(JSON.parse(savedPhotos));
-    } catch {
-      window.localStorage.removeItem(uploadStorageKey);
-    }
+    const restorePhotos = window.setTimeout(() => {
+      try {
+        const savedPhotos = window.localStorage.getItem(uploadStorageKey);
+        if (savedPhotos) setUploadedMemories(JSON.parse(savedPhotos));
+      } catch {
+        window.localStorage.removeItem(uploadStorageKey);
+      }
+    }, 0);
+    return () => window.clearTimeout(restorePhotos);
   }, []);
 
   useEffect(() => {
@@ -464,16 +469,16 @@ export default function WeddingGift() {
             </div>
           </div>
 
-          <div className="relative mt-24 grid gap-5 lg:min-h-[900px]" data-reveal>
+          <div className="relative mt-24 grid gap-5 lg:min-h-[980px]" data-reveal>
             <div aria-hidden="true" className="absolute left-[42%] top-[12%] hidden h-[460px] w-[460px] rounded-full border border-[#b78b43]/25 lg:block" />
             <div aria-hidden="true" className="absolute left-[45%] top-[15%] hidden h-[400px] w-[400px] rounded-full border border-[#b78b43]/15 lg:block" />
 
-            <figure className="relative h-[620px] overflow-hidden shadow-[0_32px_90px_rgba(67,48,22,.18)] lg:absolute lg:left-0 lg:top-0 lg:h-[760px] lg:w-[58%]">
+            <figure className="relative h-[680px] overflow-hidden shadow-[0_32px_90px_rgba(67,48,22,.18)] lg:absolute lg:left-0 lg:top-0 lg:h-[860px] lg:w-[68%]">
               <img
                 alt="Jiji and Roselyn sitting together beneath a glowing sunset"
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
-                src="/images/jiji-roselyn-1.png"
+                src="/images/jiji-roselyn-1-2x.jpg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b1711]/45 via-transparent to-transparent" />
               <figcaption className="absolute bottom-8 left-8 text-white sm:bottom-12 sm:left-12">
@@ -482,12 +487,12 @@ export default function WeddingGift() {
               </figcaption>
             </figure>
 
-            <figure className="relative h-[500px] overflow-hidden border-[10px] border-[#fbfaf6] shadow-[0_30px_80px_rgba(67,48,22,.2)] lg:absolute lg:bottom-0 lg:right-0 lg:h-[560px] lg:w-[40%]">
+            <figure className="relative h-[500px] overflow-hidden border-[10px] border-[#fbfaf6] shadow-[0_30px_80px_rgba(67,48,22,.2)] lg:absolute lg:bottom-0 lg:right-0 lg:h-[560px] lg:w-[36%]">
               <img
                 alt="Jiji and Roselyn sharing a close embrace"
                 className="h-full w-full object-cover"
                 loading="lazy"
-                src="/images/jiji-roselyn-4.png"
+                src="/images/jiji-roselyn-4-2x.jpg"
               />
             </figure>
 
@@ -572,7 +577,13 @@ export default function WeddingGift() {
           <div className="mt-20 grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
             {allMemories.map((memory, index) => (
               <article
-                className={"group relative overflow-hidden bg-[#d9cfbe] " + memory.layout + " " + memory.height}
+                className={
+                  "group relative overflow-hidden " +
+                  (memory.featured ? "bg-[#241810] ring-1 ring-[#bd9753]/45 " : "bg-[#d9cfbe] ") +
+                  memory.layout +
+                  " " +
+                  memory.height
+                }
                 key={memory.id}
               >
                 <button
@@ -581,9 +592,20 @@ export default function WeddingGift() {
                   onClick={() => openMemory(index)}
                   type="button"
                 >
+                  {memory.featured && (
+                    <img
+                      alt=""
+                      aria-hidden="true"
+                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-55 blur-3xl"
+                      src={memory.src}
+                    />
+                  )}
                   <img
                     alt={memory.alt}
-                    className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
+                    className={
+                      "relative h-full w-full transition duration-700 ease-out group-hover:scale-[1.025] " +
+                      (memory.fit || "object-cover")
+                    }
                     loading="lazy"
                     src={memory.src}
                     style={{ objectPosition: memory.position }}
@@ -630,7 +652,7 @@ export default function WeddingGift() {
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
-          src="/images/jiji-roselyn-3.png"
+          src="/images/jiji-roselyn-3-2x.jpg"
         />
         <div className="absolute inset-0 bg-[#17130d]/75" />
         <div className="relative mx-auto max-w-6xl" data-reveal>
