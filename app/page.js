@@ -391,9 +391,10 @@ export default function WeddingGift() {
         />
         <img
           alt="Jiji and Roselyn embracing beneath a crescent moon by the ocean"
-          className="absolute inset-0 h-full w-full object-contain object-center"
+          className="absolute inset-0 h-full w-full object-cover"
           fetchPriority="high"
           src={wedding.heroImage}
+          style={{ objectPosition: "center 26%" }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,14,11,.78)_0%,rgba(16,14,11,.28)_56%,rgba(16,14,11,.45)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(16,14,11,.82)_0%,transparent_58%,rgba(16,14,11,.28)_100%)]" />
