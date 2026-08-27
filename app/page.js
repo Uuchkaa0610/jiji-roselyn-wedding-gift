@@ -13,7 +13,7 @@ const wedding = {
   date: "September 14, 2026",
   location: "A beautiful beginning",
   giftFrom: "Your Friends",
-  heroImage: "/images/hero-wedding.jpg",
+  heroImage: "/images/jiji-roselyn-2.png",
   letter: [
     "May your marriage be filled with the kind of love that feels like home—steady on ordinary days, joyful on the extraordinary ones, and stronger through every season.",
     "This little corner of the world is yours to fill with the moments you never want to forget: the laughter, the happy tears, the quiet glances, and every beautiful chapter still to come.",
@@ -44,63 +44,53 @@ const story = [
 
 const starterMemories = [
   {
-    id: "quiet-moment",
-    src: "/images/memory-vows.jpg",
-    alt: "Newlyweds holding a bouquet in warm evening light",
-    caption: "The quiet before forever",
-    note: "Just the two of you",
-    layout: "md:col-span-7 md:row-span-2",
+    id: "sunset-together",
+    src: "/images/jiji-roselyn-1.png",
+    alt: "Jiji and Roselyn sitting together beneath a glowing sunset",
+    caption: "Every sunset, together",
+    note: "Side by side",
+    layout: "md:col-span-7",
     height: "h-[520px] md:h-[760px]",
     position: "center",
   },
   {
-    id: "rings",
-    src: "/images/memory-rings.jpg",
-    alt: "Wedding rings resting among soft pink flowers",
-    caption: "A promise in gold",
-    note: "The smallest details",
+    id: "same-moon",
+    src: "/images/jiji-roselyn-2.png",
+    alt: "Jiji and Roselyn embracing beside the ocean under a crescent moon",
+    caption: "Under the same moon",
+    note: "Where the night felt like home",
     layout: "md:col-span-5",
-    height: "h-[430px] md:h-[370px]",
+    height: "h-[480px] md:h-[760px]",
     position: "center",
   },
   {
-    id: "celebration",
-    src: "/images/memory-joy.jpg",
-    alt: "Newlyweds celebrating with friends and floating balloons",
-    caption: "All this joy",
-    note: "Surrounded by love",
+    id: "golden-hour",
+    src: "/images/jiji-roselyn-3.png",
+    alt: "Jiji and Roselyn sharing a golden-hour portrait beside a tree",
+    caption: "A love with its own light",
+    note: "Golden hour",
     layout: "md:col-span-5",
-    height: "h-[430px] md:h-[370px]",
+    height: "h-[500px] md:h-[620px]",
     position: "center",
   },
   {
-    id: "mr-mrs",
-    src: "/images/memory-celebrate.jpg",
-    alt: "Mr and Mrs wedding sign beneath leafy branches",
-    caption: "The new beginning",
-    note: "Officially forever",
-    layout: "md:col-span-5",
-    height: "h-[430px] md:h-[500px]",
+    id: "close-to-you",
+    src: "/images/jiji-roselyn-4.png",
+    alt: "Jiji and Roselyn sharing a quiet close embrace",
+    caption: "Close to you",
+    note: "In every quiet moment",
+    layout: "md:col-span-7",
+    height: "h-[500px] md:h-[620px]",
     position: "center",
   },
   {
-    id: "walk",
-    src: "/images/memory-forever.jpg",
-    alt: "Newlyweds laughing as they walk together beneath palm trees",
-    caption: "Side by side",
-    note: "For every adventure",
-    layout: "md:col-span-7 md:row-span-2",
-    height: "h-[560px] md:h-[860px]",
-    position: "center 58%",
-  },
-  {
-    id: "table",
-    src: "/images/memory-ceremony.jpg",
-    alt: "Wedding table arranged with delicate flowers and glassware",
-    caption: "Made with love",
-    note: "Every thoughtful detail",
-    layout: "md:col-span-5",
-    height: "h-[430px] md:h-[340px]",
+    id: "every-adventure",
+    src: "/images/jiji-roselyn-5.png",
+    alt: "Jiji and Roselyn reaching for one another beneath a starry sky",
+    caption: "Into every adventure",
+    note: "Always reaching for one another",
+    layout: "md:col-span-12",
+    height: "h-[580px] md:h-[820px]",
     position: "center",
   },
 ];
@@ -389,8 +379,14 @@ export default function WeddingGift() {
 
       <section className="relative flex min-h-[100svh] items-end" id="top">
         <img
-          alt="Newlywed couple sharing a quiet moment outdoors"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-65 blur-2xl"
+          src={wedding.heroImage}
+        />
+        <img
+          alt="Jiji and Roselyn embracing beneath a crescent moon by the ocean"
+          className="absolute inset-0 h-full w-full object-contain object-center"
           fetchPriority="high"
           src={wedding.heroImage}
         />
@@ -474,10 +470,10 @@ export default function WeddingGift() {
 
             <figure className="relative h-[620px] overflow-hidden shadow-[0_32px_90px_rgba(67,48,22,.18)] lg:absolute lg:left-0 lg:top-0 lg:h-[760px] lg:w-[58%]">
               <img
-                alt="Newlyweds walking and laughing together"
+                alt="Jiji and Roselyn sitting together beneath a glowing sunset"
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
-                src="/images/memory-forever.jpg"
+                src="/images/jiji-roselyn-1.png"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b1711]/45 via-transparent to-transparent" />
               <figcaption className="absolute bottom-8 left-8 text-white sm:bottom-12 sm:left-12">
@@ -488,10 +484,10 @@ export default function WeddingGift() {
 
             <figure className="relative h-[500px] overflow-hidden border-[10px] border-[#fbfaf6] shadow-[0_30px_80px_rgba(67,48,22,.2)] lg:absolute lg:bottom-0 lg:right-0 lg:h-[560px] lg:w-[40%]">
               <img
-                alt="Wedding rings resting on pale flowers"
+                alt="Jiji and Roselyn sharing a close embrace"
                 className="h-full w-full object-cover"
                 loading="lazy"
-                src="/images/memory-rings.jpg"
+                src="/images/jiji-roselyn-4.png"
               />
             </figure>
 
@@ -549,7 +545,7 @@ export default function WeddingGift() {
             </div>
             <div className="max-w-lg lg:pb-3">
               <p className="text-lg leading-8 text-[#716758]">
-                Start with these sample memories, then add your own photographs to make the gift truly theirs.
+                These five moments now live at the heart of the keepsake. Add more photographs whenever a new favorite deserves a place beside them.
               </p>
               <button
                 className="mt-7 inline-flex min-h-14 items-center gap-4 rounded-full bg-[#332d24] px-7 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:-translate-y-1 hover:bg-[#a77e3e] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#a77e3e]/25"
@@ -634,7 +630,7 @@ export default function WeddingGift() {
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
-          src="/images/memory-vows.jpg"
+          src="/images/jiji-roselyn-3.png"
         />
         <div className="absolute inset-0 bg-[#17130d]/75" />
         <div className="relative mx-auto max-w-6xl" data-reveal>
