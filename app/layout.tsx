@@ -2,6 +2,11 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, Manrope } from 'next/font/google';
 import './globals.css';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : 'https://wedding-memory-keepsake.uuchkaa0610.chatgpt.site');
+
 const manrope = Manrope({
   variable: '--font-manrope',
   subsets: ['latin'],
@@ -15,7 +20,7 @@ const editorial = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://wedding-memory-keepsake.uuchkaa0610.chatgpt.site'),
+  metadataBase: new URL(siteUrl),
   title: 'Jiji & Roselyn — A Wedding Gift Made With Love',
   description:
     'A timeless white-and-gold wedding keepsake for a lifetime of beautiful memories.',

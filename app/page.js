@@ -13,7 +13,7 @@ const wedding = {
   date: "September 14, 2026",
   location: "A beautiful beginning",
   giftFrom: "Your Friends",
-  heroImage: "/images/jiji-roselyn-2-2x.jpg",
+  heroImage: "/images/jiji-roselyn-8-2x.jpg",
   letter: [
     "May your marriage be filled with the kind of love that feels like home—steady on ordinary days, joyful on the extraordinary ones, and stronger through every season.",
     "This little corner of the world is yours to fill with the moments you never want to forget: the laughter, the happy tears, the quiet glances, and every beautiful chapter still to come.",
@@ -52,7 +52,7 @@ const starterMemories = [
     layout: "md:col-span-12",
     height: "h-[460px] sm:h-[700px] md:h-[900px] lg:h-[1060px]",
     position: "center",
-    fit: "object-cover md:object-contain",
+    fit: "object-cover",
     featured: true,
   },
   {
@@ -92,6 +92,26 @@ const starterMemories = [
     caption: "Into every adventure",
     note: "Always reaching for one another",
     layout: "md:col-span-5",
+    height: "h-[500px] md:h-[680px]",
+    position: "center",
+  },
+  {
+    id: "lantern-light",
+    src: "/images/jiji-roselyn-11-2x.jpg",
+    alt: "Jiji and Roselyn walking together beneath a glowing lantern",
+    caption: "Where every path leads home",
+    note: "By lantern light",
+    layout: "md:col-span-5",
+    height: "h-[500px] md:h-[680px]",
+    position: "center",
+  },
+  {
+    id: "hidden-kiss",
+    src: "/images/jiji-roselyn-13-2x.jpg",
+    alt: "Jiji and Roselyn sharing an intimate moment among flowers beneath the stars",
+    caption: "A love worth finding",
+    note: "Beneath the stars",
+    layout: "md:col-span-7",
     height: "h-[500px] md:h-[680px]",
     position: "center",
   },
@@ -384,17 +404,11 @@ export default function WeddingGift() {
 
       <section className="relative flex min-h-[100svh] items-end" id="top">
         <img
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full scale-110 object-cover object-center opacity-65 blur-2xl"
-          src={wedding.heroImage}
-        />
-        <img
-          alt="Jiji and Roselyn embracing beneath a crescent moon by the ocean"
+          alt="Jiji and Roselyn sharing a close, loving gaze"
           className="absolute inset-0 h-full w-full object-cover"
           fetchPriority="high"
           src={wedding.heroImage}
-          style={{ objectPosition: "center 26%" }}
+          style={{ objectPosition: "center 24%" }}
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,14,11,.78)_0%,rgba(16,14,11,.28)_56%,rgba(16,14,11,.45)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(0deg,rgba(16,14,11,.82)_0%,transparent_58%,rgba(16,14,11,.28)_100%)]" />
@@ -476,10 +490,10 @@ export default function WeddingGift() {
 
             <figure className="relative h-[680px] overflow-hidden shadow-[0_32px_90px_rgba(67,48,22,.18)] lg:absolute lg:left-0 lg:top-0 lg:h-[860px] lg:w-[68%]">
               <img
-                alt="Jiji and Roselyn sitting together beneath a glowing sunset"
+                alt="Jiji and Roselyn embracing before a sweeping seaside mountain view"
                 className="h-full w-full object-cover object-center"
                 loading="lazy"
-                src="/images/jiji-roselyn-1-2x.jpg"
+                src="/images/jiji-roselyn-10-2x.jpg"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1b1711]/45 via-transparent to-transparent" />
               <figcaption className="absolute bottom-8 left-8 text-white sm:bottom-12 sm:left-12">
@@ -490,10 +504,10 @@ export default function WeddingGift() {
 
             <figure className="relative h-[500px] overflow-hidden border-[10px] border-[#fbfaf6] shadow-[0_30px_80px_rgba(67,48,22,.2)] lg:absolute lg:bottom-0 lg:right-0 lg:h-[560px] lg:w-[36%]">
               <img
-                alt="Jiji and Roselyn sharing a close embrace"
+                alt="Jiji and Roselyn sharing a quiet portrait together"
                 className="h-full w-full object-cover"
                 loading="lazy"
-                src="/images/jiji-roselyn-4-2x.jpg"
+                src="/images/jiji-roselyn-9-2x.jpg"
               />
             </figure>
 
@@ -551,7 +565,7 @@ export default function WeddingGift() {
             </div>
             <div className="max-w-lg lg:pb-3">
               <p className="text-lg leading-8 text-[#716758]">
-                These five moments now live at the heart of the keepsake. Add more photographs whenever a new favorite deserves a place beside them.
+                These seven moments now live at the heart of the keepsake. Add more photographs whenever a new favorite deserves a place beside them.
               </p>
               <button
                 className="mt-7 inline-flex min-h-14 items-center gap-4 rounded-full bg-[#332d24] px-7 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:-translate-y-1 hover:bg-[#a77e3e] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#a77e3e]/25"
@@ -593,14 +607,6 @@ export default function WeddingGift() {
                   onClick={() => openMemory(index)}
                   type="button"
                 >
-                  {memory.featured && (
-                    <img
-                      alt=""
-                      aria-hidden="true"
-                      className="absolute inset-0 h-full w-full scale-110 object-cover opacity-55 blur-3xl"
-                      src={memory.src}
-                    />
-                  )}
                   <img
                     alt={memory.alt}
                     className={
@@ -653,7 +659,7 @@ export default function WeddingGift() {
           aria-hidden="true"
           className="absolute inset-0 h-full w-full object-cover"
           loading="lazy"
-          src="/images/jiji-roselyn-3-2x.jpg"
+          src="/images/jiji-roselyn-12-2x.jpg"
         />
         <div className="absolute inset-0 bg-[#17130d]/75" />
         <div className="relative mx-auto max-w-6xl" data-reveal>
