@@ -119,6 +119,16 @@ const starterMemories = [
 
 const uploadStorageKey = "wedding-gift-personal-photos";
 
+function uniqueMemories(memories) {
+  const seenSources = new Set();
+
+  return memories.filter((memory) => {
+    if (!memory?.src || seenSources.has(memory.src)) return false;
+    seenSources.add(memory.src);
+    return true;
+  });
+}
+
 function optimizeImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -157,7 +167,7 @@ export default function WeddingGift() {
   const couple = wedding.partnerOne + " & " + wedding.partnerTwo;
   const initials = wedding.partnerOne.charAt(0) + " & " + wedding.partnerTwo.charAt(0);
   const allMemories = useMemo(
-    () => starterMemories.concat(uploadedMemories),
+    () => uniqueMemories(starterMemories.concat(uploadedMemories)),
     [uploadedMemories],
   );
 
@@ -165,7 +175,18 @@ export default function WeddingGift() {
     const restorePhotos = window.setTimeout(() => {
       try {
         const savedPhotos = window.localStorage.getItem(uploadStorageKey);
-        if (savedPhotos) setUploadedMemories(JSON.parse(savedPhotos));
+        if (!savedPhotos) return;
+
+        const parsedPhotos = JSON.parse(savedPhotos);
+        if (!Array.isArray(parsedPhotos)) throw new Error("Invalid saved photos");
+
+        const uniquePhotos = uniqueMemories(parsedPhotos).slice(0, 6);
+        setUploadedMemories(uniquePhotos);
+
+        if (uniquePhotos.length !== parsedPhotos.length) {
+          window.localStorage.setItem(uploadStorageKey, JSON.stringify(uniquePhotos));
+          setUploadMessage("Repeated saved photos were removed automatically.");
+        }
       } catch {
         window.localStorage.removeItem(uploadStorageKey);
       }
@@ -238,10 +259,24 @@ export default function WeddingGift() {
 
     setUploadMessage("Adding your memories…");
     try {
-      const additions = await Promise.all(
-        files.map(async (file, index) => ({
+      const optimizedFiles = await Promise.all(
+        files.map(async (file) => ({ file, src: await optimizeImage(file) })),
+      );
+      const seenSources = new Set(uploadedMemories.map((memory) => memory.src));
+      let skippedDuplicates = 0;
+      const additions = [];
+
+      optimizedFiles.forEach(({ file, src }) => {
+        if (seenSources.has(src)) {
+          skippedDuplicates += 1;
+          return;
+        }
+
+        const index = uploadedMemories.length + additions.length;
+        seenSources.add(src);
+        additions.push({
           id: "personal-" + Date.now() + "-" + index,
-          src: await optimizeImage(file),
+          src,
           alt: "Personal wedding memory: " + file.name,
           caption: file.name.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " "),
           note: "Your personal memory",
@@ -249,14 +284,23 @@ export default function WeddingGift() {
           height: index % 3 === 0 ? "h-[500px] md:h-[620px]" : "h-[430px] md:h-[520px]",
           position: "center",
           uploaded: true,
-        })),
-      );
-      const nextPhotos = uploadedMemories.concat(additions);
+        });
+      });
+
+      if (!additions.length) {
+        setUploadMessage("Those photos are already in the album.");
+        return;
+      }
+
+      const nextPhotos = uniqueMemories(uploadedMemories.concat(additions)).slice(0, 6);
       window.localStorage.setItem(uploadStorageKey, JSON.stringify(nextPhotos));
       setUploadedMemories(nextPhotos);
       setUploadMessage(
         additions.length +
-          (additions.length === 1 ? " photo added and saved on this device." : " photos added and saved on this device."),
+          (additions.length === 1 ? " photo added and saved on this device." : " photos added and saved on this device.") +
+          (skippedDuplicates
+            ? " " + skippedDuplicates + (skippedDuplicates === 1 ? " duplicate was skipped." : " duplicates were skipped.")
+            : ""),
       );
     } catch {
       setUploadMessage("That photo was too large to save. Try a smaller image.");
