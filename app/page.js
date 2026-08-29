@@ -10,7 +10,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const wedding = {
   partnerOne: "Jiji",
   partnerTwo: "Roselyn",
-  date: "September 14, 2026",
+  date: "August 29, 2026",
   location: "A beautiful beginning",
   giftFrom: "Your Friends",
   heroImage: "/images/jiji-roselyn-8-2x.jpg",
